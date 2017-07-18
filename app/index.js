@@ -6,7 +6,7 @@ import rootReducer from './actions/application/reducer';
 import Application from './components/application/Applier';
 //middleware
 import thunk from 'redux-thunk';
-import createLogger from 'redux-logger';
+import { createLogger } from 'redux-logger';
 
 const logger = createLogger();
 const middleware = [thunk, logger];

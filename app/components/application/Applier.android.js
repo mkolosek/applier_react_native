@@ -9,11 +9,11 @@ import { EventEmitter } from 'events';
 //actions
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-// import { getPositions } from '../../actions/Positions';
+import { getPositions } from '../../actions/Positions';
 
 BackAndroid.addEventListener('hardwareBackPress', () => {
   try {
-    Actions.pop();
+    console.log(Actions.pop());
     return true;
   } catch (err) {
     return false;
@@ -31,19 +31,19 @@ export class RootRouter extends Component {
       .then(token => {
         if (token) {
           this.loggedIn = true;
-          // Actions.home();
+          Actions.home();
         } else {
           this.loggedIn = false;
-          // Actions.signin();
+          Actions.signin();
         }
       })
       .catch(err => console.log(err));
   }
 
   componentDidMount() {
-    // setTimeout(() => {
-    //   if (this.id) this.props.getPositions(this.id);
-    // }, 3000);
+    setTimeout(() => {
+      if (this.loggedIn) this.props.getPositions();
+    }, 3000);
   }
 
   userIsSignedIn() {
@@ -54,7 +54,9 @@ export class RootRouter extends Component {
     const isUserSignedIn = this.userIsSignedIn();
     return (
       <View style={{ flex: 1 }}>
-        <RouterWithRedux scenes={scenes} hideNavBar={true} />
+        <RouterWithRedux hideNavBar={true}>
+          {scenes}
+        </RouterWithRedux>
       </View>
     );
   }
@@ -66,13 +68,13 @@ const stateToProps = state => {
   };
 };
 
-// const dispatchToProps = dispatch => {
-//   return bindActionCreators(
-//     {
-//       getPositions
-//     },
-//     dispatch
-//   );
-// };
+const dispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      getPositions
+    },
+    dispatch
+  );
+};
 
-export default connect(stateToProps, null)(RootRouter);
+export default connect(stateToProps, dispatchToProps)(RootRouter);
