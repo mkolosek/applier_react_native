@@ -1,12 +1,13 @@
 import React from 'react';
 import { Record } from 'immutable';
 
-import * as actions from '../constants/PositionConstants';
+import * as actions from './constants';
 
 const InitialState = Record({
   positions: [],
   selectedPosition: {},
-  applicants: []
+  applicants: [],
+  busy: false
 });
 const initialState = new InitialState();
 
@@ -21,16 +22,21 @@ export default function PositionReducer(state = initialState, action) {
       state = state.set('positions', action.payload);
       return state;
     }
-    case actions.SELECT_POSITION: {
-      state = state.set('selectedPosition', action.payload);
-      return state;
-    }
     case actions.GET_POSITION_APPLICANTS_START: {
       state = state.set('applicants', []);
       return state;
     }
     case actions.GET_POSITION_APPLICANTS_SUCCESS: {
       state = state.set('applicants', action.payload);
+      return state;
+    }
+    case actions.REJECT_APPLICANT_START: {
+      state = state.set('busy', true);
+      return state;
+    }
+    case actions.REJECT_APPLICANT_SUCCESS: {
+      state = state.set('applicants', state.applicants.filter(a => a.token != action.payload));
+      state = state.set('busy', false);
       return state;
     }
     default: {

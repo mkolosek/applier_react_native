@@ -8,9 +8,6 @@ export const signIn = (email, password) => dispatch => _signIn(dispatch, email, 
 
 const handleAsyncStorage = async function(data) {
   if (data.errors) throw data.errors;
-  await AsyncStorage.setItem('userId', String(data.id), () => {
-    return data;
-  });
   await AsyncStorage.setItem('auth_token', data.auth_token, () => {
     return data;
   });
@@ -33,6 +30,9 @@ const _signIn = (dispatch, email, password) => {
     })
   })
     .then(resp => {
+      if (resp.status === 401) {
+        throw new Error('Incorrect email or password');
+      }
       return resp.json();
     })
     .then(handleAsyncStorage)

@@ -10,18 +10,20 @@ import Avatar from './shared/avatar';
 import Icons from './shared/icons';
 import Borders from './shared/borders';
 import Menu from './shared/menu';
+import Auth from './shared/auth';
 
 module.exports = {
-  colors : Colors,
-  fonts : Fonts,
-  alignments : Alignments,
-  margins : Margins,
+  colors: Colors,
+  fonts: Fonts,
+  alignments: Alignments,
+  margins: Margins,
   remove: Remove,
-  paddings : Paddings,
-  positions : Positions,
-  app_layout : AppLayout,
+  paddings: Paddings,
+  positions: Positions,
+  app_layout: AppLayout,
   avatar: Avatar,
   icons: Icons,
   borders: Borders,
-  menu: Menu
-}
+  menu: Menu,
+  auth: Auth
+};

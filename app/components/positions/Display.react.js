@@ -1,28 +1,22 @@
 'use strict';
 
 import React, { Component } from 'react';
-import {
-  ScrollView,
-  View,
-  Text,
-  Alert,
-  AsyncStorage,
-  Keyboard,
-  Platform,
-  LayoutAnimation,
-  TouchableOpacity
-} from 'react-native';
+import { ScrollView, View, Text, AsyncStorage, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getPosition } from '../../actions/Positions';
+import { getPositionApplicants } from '../../actions/positions/actions';
+import { rejectApplicant } from '../../actions/positionRequests/actions';
 
-const top = 0;
+import styles from '../../assets/styles/shared_styles';
 
 export class Display extends Component {
-  selectPosition(positionId) {
-    this.props.getPosition();
-    Actions.position();
+  componentWillMount() {
+    this.props.getPositionApplicants(this.props.selectedPosition.id);
+  }
+
+  rejectApplicant(applicantId) {
+    this.props.rejectApplicant(applicantId);
   }
 
   render() {
@@ -30,28 +24,44 @@ export class Display extends Component {
     this.props.applicants.forEach(applicant => {
       let key = 'appl-' + String(applicant.id);
       applicantRows.push(
-        <View key={key}>
-          <Text style={{ fontSize: 30 }}>
-            {applicant.name} - {applicant.email}
+        <View key={key} style={styles.positions.applicantRow}>
+          <Text style={styles.fonts.medium}>
+            {applicant.email}
           </Text>
+          {this.props.busy
+            ? <View>
+                <Text style={[styles.positions.applicantRejectBtn, styles.positions.rejectDisabled]}>Reject</Text>
+              </View>
+            : <TouchableOpacity
+                onPress={() => {
+                  this.rejectApplicant(applicant.token);
+                }}
+              >
+                <Text style={[styles.positions.applicantRejectBtn, styles.positions.rejectEnabled]}>Reject</Text>
+              </TouchableOpacity>}
         </View>
       );
     });
     return (
-      <View>
-        <Text style={{ fontSize: 30 }}>
-          {this.props.position.title} Applicants
-        </Text>
-        <ScrollView>
-          {applicantRows}
-        </ScrollView>
-      </View>
+      <ScrollView style={styles.margins.topSmall}>
+        {applicantRows}
+      </ScrollView>
     );
   }
 }
 
 const stateToProps = state => {
-  return { position: state.positions.selectedPosition, applicants: state.positions.applicants };
+  return { applicants: state.positions.applicants, busy: state.positions.busy };
 };
 
-export default connect(stateToProps, null)(Display);
+const dispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      getPositionApplicants,
+      rejectApplicant
+    },
+    dispatch
+  );
+};
+
+export default connect(stateToProps, dispatchToProps)(Display);

@@ -1,19 +1,31 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-  absoluteRight: {
-    position:'absolute',
-    top: 10,
-    right: 0
+  positionRow: {
+    padding: 10,
+    marginLeft: 20
   },
-  absoluteLeft: {
-    position:'absolute',
-    top: 10,
-    left: 0
+  applicantRow: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    flexWrap: 'wrap',
+    height: 40,
+    paddingRight: 20
   },
-  absoluteFillInParent: {
-    position:'absolute',
-    top: 0,
-    left: 0
+  applicantRejectBtn: {
+    fontSize: 18,
+    borderWidth: 1,
+    padding: 5,
+    marginLeft: 10
+  },
+  rejectEnabled: {
+    color: 'white',
+    backgroundColor: 'red',
+    borderColor: 'red'
+  },
+  rejectDisabled: {
+    color: 'black',
+    backgroundColor: 'grey',
+    borderColor: 'grey'
   }
 });

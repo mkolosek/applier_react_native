@@ -1,5 +1,6 @@
-import * as actions from '../constants/PositionConstants';
-import { positionsUrl } from './urls';
+'use strict';
+import * as actions from './constants';
+import { positionsUrl } from '../urls';
 import fetch from 'react-native-cancelable-fetch';
 import { AsyncStorage } from 'react-native';
 
@@ -22,12 +23,6 @@ export function getPositions() {
       .catch(error => {
         return dispatch({ type: actions.GET_POSITIONS_ERROR, error });
       });
-  };
-}
-
-export function selectPosition(position) {
-  return dispatch => {
-    dispatch({ type: actions.SELECT_POSITION, payload: position });
   };
 }
 

@@ -1,28 +1,18 @@
 'use strict';
 
 import React, { Component } from 'react';
-import {
-  ScrollView,
-  View,
-  Text,
-  Alert,
-  AsyncStorage,
-  Keyboard,
-  Platform,
-  LayoutAnimation,
-  TouchableOpacity
-} from 'react-native';
+import { ScrollView, View, Text, Alert, Keyboard, Platform, LayoutAnimation, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { signIn } from '../../actions/authentication/signin/actions';
 
 //widgets
-import { LogoText, Link } from '../../widgets';
 import TextInput from './utils/TextInput.react';
 
 // styles
 import signin from './styles/SignIn.css';
+import styles from '../../assets/styles/shared_styles';
 
 const top = 0;
 
@@ -60,18 +50,9 @@ export class SignIn extends Component {
     const { email, password } = this.state;
     this.props.signIn(email, password).then(() => {
       if (this.props.error) {
-        var error = this.props.error.first() || {};
-        switch (error.title) {
-          case 'USER_NOT_FOUND':
-            Alert.alert(authStrings['invalidCredentials'], authStrings['invalidCredentialsError']);
-            break;
-          default:
-            Alert.alert(authStrings['error'], authStrings['errorSignIn']);
-            break;
-        }
+        Alert.alert('Invalid Credentials', this.props.error.message);
         this.setState({ disabled: false });
       } else {
-        var ref = this;
         this.setState({ disabled: false });
         Actions.home();
       }
@@ -89,7 +70,7 @@ export class SignIn extends Component {
             ]}
           >
             <View style={signin.form}>
-              <LogoText content="Applier" style={signin.logo} />
+              <Text style={[signin.logo, styles.colors.blackText, styles.fonts.bold, styles.fonts.large]}>Applier</Text>
               <TextInput
                 name="email"
                 onChangeText={email => {
@@ -140,4 +121,4 @@ const dispatchToProps = dispatch => {
   );
 };
 
-export default connect(null, dispatchToProps)(SignIn);
+export default connect(stateToProps, dispatchToProps)(SignIn);

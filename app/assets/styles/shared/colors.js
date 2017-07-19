@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-const colors =  require('../../constants/colors')
+const colors = require('../../constants/colors');
 
 export default StyleSheet.create({
   // text
@@ -7,38 +7,38 @@ export default StyleSheet.create({
   whiteText: {
     color: colors.white
   },
-  blueText:{
+  blueText: {
     color: colors.blue
   },
-  greenText:{
+  greenText: {
     color: colors.green
   },
-  lightGrayText:{
+  lightGrayText: {
     color: colors.lightGray
   },
-  grayText:{
+  grayText: {
     color: colors.gray
   },
-  darkerGrayText:{
+  darkerGrayText: {
     color: colors.darkerGray
   },
-  redText:{
+  redText: {
     color: colors.red
   },
-  blackText:{
+  blackText: {
     color: colors.black
   },
   placeholderText: {
     color: colors.lightGray
   },
   // background
-  blueBackground:{
+  blueBackground: {
     backgroundColor: colors.blue
   },
   whiteBackground: {
     backgroundColor: colors.white
   },
-  lightGrayBackground:{
+  lightGrayBackground: {
     backgroundColor: colors.lightGray
   },
   blackWithOpacity: {

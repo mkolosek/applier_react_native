@@ -5,7 +5,7 @@ const { width, height } = Dimensions.get('window');
 
 export default (signin = StyleSheet.create({
   background: {
-    backgroundColor: colors.blue,
+    backgroundColor: colors.lightGray,
     flex: 1
   },
   logo: {
@@ -15,7 +15,7 @@ export default (signin = StyleSheet.create({
     alignItems: 'center'
   },
   container: {
-    backgroundColor: colors.blue,
+    backgroundColor: colors.lightGray,
     paddingBottom: Platform.OS === 'ios' ? 20 : 40,
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -41,12 +41,12 @@ export default (signin = StyleSheet.create({
     fontSize: 13
   },
   signinBtn: {
-    backgroundColor: colors.white,
+    backgroundColor: colors.green,
     height: 40,
-    width: width - 50,
+    width: width - 180,
     justifyContent: 'center',
     flexDirection: 'row',
-    marginBottom: 13,
+    marginBottom: 120,
     borderRadius: 3
   },
   disabledBtnText: {
@@ -54,7 +54,7 @@ export default (signin = StyleSheet.create({
   },
   signinBtnText: {
     alignSelf: 'center',
-    color: colors.blue,
+    color: colors.white,
     fontWeight: 'bold',
     fontSize: 22
   },

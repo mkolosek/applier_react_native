@@ -1,11 +1,11 @@
 'use strict';
 import { combineReducers } from 'redux';
-import signin from '../authentication/signin/reducer';
 import routes from './routes';
-import positions from '../../reducers/PositionReducer';
+import signin from '../authentication/signin/reducer';
+import positions from '../positions/reducer';
 
 export default combineReducers({
+  positions,
   routes,
-  signin,
-  positions
+  signin
 });

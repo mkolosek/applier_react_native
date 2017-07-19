@@ -1,30 +1,22 @@
 'use strict';
 
 import React, { Component } from 'react';
-import {
-  ScrollView,
-  View,
-  Text,
-  Alert,
-  AsyncStorage,
-  Keyboard,
-  Platform,
-  LayoutAnimation,
-  TouchableOpacity
-} from 'react-native';
+import { ScrollView, View, Text, TouchableOpacity } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { selectPosition, getPositionApplicants } from '../../actions/Positions';
+import { getPositions } from '../../actions/positions/actions';
 
-const top = 0;
+import styles from '../../assets/styles/shared_styles';
 
 export class List extends Component {
+  componentWillMount() {
+    this.props.getPositions();
+  }
+
   selectPosition(positionId) {
     let selectedPosition = this.props.positions.find(x => x.id === positionId);
-    this.props.selectPosition(selectedPosition);
-    this.props.getPositionApplicants(positionId);
-    Actions.position();
+    Actions.position({ selectedPosition });
   }
 
   render() {
@@ -32,13 +24,13 @@ export class List extends Component {
     this.props.positions.forEach(position => {
       let key = 'pos-' + String(position.id);
       positionRows.push(
-        <View key={key}>
+        <View key={key} style={styles.positions.positionRow}>
           <TouchableOpacity
             onPress={() => {
               this.selectPosition(position.id);
             }}
           >
-            <Text style={{ fontSize: 30 }}>
+            <Text style={styles.fonts.large}>
               {position.title}
             </Text>
           </TouchableOpacity>
@@ -46,8 +38,7 @@ export class List extends Component {
       );
     });
     return (
-      <View>
-        <Text style={{ fontSize: 30 }}>These are your positions:</Text>
+      <View style={styles.margins.topSmall}>
         <ScrollView>
           {positionRows}
         </ScrollView>
@@ -63,8 +54,7 @@ const stateToProps = state => {
 const dispatchToProps = dispatch => {
   return bindActionCreators(
     {
-      selectPosition,
-      getPositionApplicants
+      getPositions
     },
     dispatch
   );
