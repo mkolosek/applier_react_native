@@ -1,26 +1,32 @@
+import { AsyncStorage } from 'react-native';
 import * as actions from '../positions/constants';
 import { positionRequestsUrl } from '../urls';
-import fetch from 'react-native-cancelable-fetch';
-import { AsyncStorage } from 'react-native';
 
+/* eslint-disable import/prefer-default-export*/
 export function rejectApplicant(positionRequestId) {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({ type: actions.REJECT_APPLICANT_START });
-    let token = (await AsyncStorage.getItem('auth_token')) || null;
-    if (!token) throw 'No authentication token saved!';
-    let headers = { 'Content-Type': 'application/json' };
-    let body = JSON.stringify({ id: positionRequestId, emailed_text: '' });
-    return fetch(positionRequestsUrl + '/reject?authentication_token=' + token, {
-      method: 'PUT',
-      headers,
-      body
-    })
-      .then(resp => {
-        console.log(resp);
-        return dispatch({ type: actions.REJECT_APPLICANT_SUCCESS, payload: positionRequestId });
+    const token = (await AsyncStorage.getItem('auth_token')) || null;
+    if (!token) throw new Error('No authentication token saved!');
+    const headers = { 'Content-Type': 'application/json' };
+    const body = JSON.stringify({
+      authentication_token: token,
+      id: positionRequestId,
+      emailed_text: '',
+    });
+    return (
+      fetch(`${positionRequestsUrl}/reject`, {
+        method: 'PUT',
+        headers,
+        body,
       })
-      .catch(error => {
-        return dispatch({ type: actions.REJECT_APPLICANT_ERROR, error });
-      });
+        /* eslint-disable no-unused-vars*/
+        .then(resp =>
+          /* eslint-enable no-unused-vars*/
+          dispatch({ type: actions.REJECT_APPLICANT_SUCCESS, payload: positionRequestId }),
+        )
+        .catch(error => dispatch({ type: actions.REJECT_APPLICANT_ERROR, error }))
+    );
   };
 }
+/* eslint-enable import/prefer-default-export*/
