@@ -1,5 +1,5 @@
 import { ActionConst } from 'react-native-router-flux';
-import { Record } from 'immutable'
+import { Record } from 'immutable';
 
 const InitialState = Record({
   scene: {},
