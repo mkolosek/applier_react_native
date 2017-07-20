@@ -1,13 +1,21 @@
-'use strict';
-
 import React, { Component } from 'react';
-import { ScrollView, View, Text, Alert, Keyboard, Platform, LayoutAnimation, TouchableOpacity } from 'react-native';
+import PropTypes from 'prop-types';
+import {
+  ScrollView,
+  View,
+  Text,
+  Alert,
+  Keyboard,
+  Platform,
+  LayoutAnimation,
+  TouchableOpacity,
+} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { signIn } from '../../actions/authentication/signin/actions';
+import signIn from '../../actions/authentication/signin/actions';
 
-//widgets
+// widgets
 import TextInput from './utils/TextInput.react';
 
 // styles
@@ -17,16 +25,28 @@ import styles from '../../assets/styles/shared_styles';
 const top = 0;
 
 export class SignIn extends Component {
+  static propTypes = {
+    signIn: PropTypes.func.isRequired,
+    error: PropTypes.objectOf(PropTypes.string),
+  };
+
   constructor(props) {
     super(props);
-    this.state = { email: '', password: '', marginTop: false, top: top, disabled: false };
+    this.state = { email: '', password: '', marginTop: false, top, disabled: false };
+    this.login = this.login.bind(this);
   }
 
   componentWillMount() {
     const listenerShow = Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow';
     const listenerHide = Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide';
-    this.keyboardDidShowListener = Keyboard.addListener(listenerShow, this.keyboardDidShow.bind(this));
-    this.keyboardDidHideListener = Keyboard.addListener(listenerHide, this.keyboardDidHide.bind(this));
+    this.keyboardDidShowListener = Keyboard.addListener(
+      listenerShow,
+      this.keyboardDidShow.bind(this),
+    );
+    this.keyboardDidHideListener = Keyboard.addListener(
+      listenerHide,
+      this.keyboardDidHide.bind(this),
+    );
   }
 
   componentWillUnmount() {
@@ -39,14 +59,15 @@ export class SignIn extends Component {
     this.setState({ top: -(e.endCoordinates.height - 50), marginTop: true });
   }
 
+  /* eslint-disable no-unused-vars*/
   keyboardDidHide(e) {
+    /* eslint-enable no-unused-vars*/
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    this.setState({ top: top, marginTop: false });
+    this.setState({ top, marginTop: false });
   }
 
   login() {
     this.setState({ disabled: true });
-    var authStrings = {};
     const { email, password } = this.state;
     this.props.signIn(email, password).then(() => {
       if (this.props.error) {
@@ -66,14 +87,26 @@ export class SignIn extends Component {
           <View
             style={[
               signin.container,
-              { marginTop: this.state.top, justifyContent: this.state.marginTop ? 'center' : 'space-between' }
+              {
+                marginTop: this.state.top,
+                justifyContent: this.state.marginTop ? 'center' : 'space-between',
+              },
             ]}
           >
             <View style={signin.form}>
-              <Text style={[signin.logo, styles.colors.blackText, styles.fonts.bold, styles.fonts.large]}>Applier</Text>
+              <Text
+                style={[
+                  signin.logo,
+                  styles.colors.blackText,
+                  styles.fonts.bold,
+                  styles.fonts.large,
+                ]}
+              >
+                Applier
+              </Text>
               <TextInput
                 name="email"
-                onChangeText={email => {
+                onChangeText={(email) => {
                   this.setState({ email });
                 }}
                 value={this.state.email}
@@ -83,8 +116,8 @@ export class SignIn extends Component {
               />
               <TextInput
                 name="password"
-                secureTextEntry={true}
-                onChangeText={password => {
+                secureTextEntry
+                onChangeText={(password) => {
                   this.setState({ password });
                 }}
                 value={this.state.password}
@@ -93,11 +126,11 @@ export class SignIn extends Component {
             <View style={{ marginTop: this.state.marginTop ? 60 : 0 }}>
               {this.state.disabled
                 ? <View style={signin.signinBtn}>
-                    <Text style={[signin.signinBtnText, signin.disabledBtnText]}>Logging in</Text>
-                  </View>
-                : <TouchableOpacity style={signin.signinBtn} onPress={this.login.bind(this)}>
-                    <Text style={signin.signinBtnText}>Log in</Text>
-                  </TouchableOpacity>}
+                  <Text style={[signin.signinBtnText, signin.disabledBtnText]}>Logging in</Text>
+                </View>
+                : <TouchableOpacity style={signin.signinBtn} onPress={this.login}>
+                  <Text style={signin.signinBtnText}>Log in</Text>
+                </TouchableOpacity>}
             </View>
           </View>
         </ScrollView>
@@ -106,19 +139,20 @@ export class SignIn extends Component {
   }
 }
 
-const stateToProps = state => {
-  return {
-    error: state.signin.error
-  };
+SignIn.defaultProps = {
+  error: null,
 };
 
-const dispatchToProps = dispatch => {
-  return bindActionCreators(
+const stateToProps = state => ({
+  error: state.signin.error,
+});
+
+const dispatchToProps = dispatch =>
+  bindActionCreators(
     {
-      signIn
+      signIn,
     },
-    dispatch
+    dispatch,
   );
-};
 
 export default connect(stateToProps, dispatchToProps)(SignIn);
