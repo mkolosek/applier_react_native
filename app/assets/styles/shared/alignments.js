@@ -21,6 +21,10 @@ export default StyleSheet.create({
     alignSelf: 'flex-start',
     alignItems: 'flex-start',
   },
+  right: {
+    alignSelf: 'flex-end',
+    alignItems: 'flex-end',
+  },
   spaceBetween: {
     alignSelf: 'stretch',
     justifyContent: 'space-between',

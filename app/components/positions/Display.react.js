@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { ScrollView, View, Text, TouchableOpacity } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getPositionApplicants } from '../../actions/positions/actions';
-import { rejectApplicant } from '../../actions/positionRequests/actions';
 
 import styles from '../../assets/styles/shared_styles';
 
 export class Display extends Component {
   static propTypes = {
     getPositionApplicants: PropTypes.func.isRequired,
-    rejectApplicant: PropTypes.func.isRequired,
     selectedPosition: PropTypes.shape({
       id: PropTypes.number.isRequired,
     }).isRequired,
@@ -22,15 +21,15 @@ export class Display extends Component {
         token: PropTypes.string.isRequired,
       }),
     ).isRequired,
-    busy: PropTypes.bool.isRequired,
   };
 
   componentWillMount() {
     this.props.getPositionApplicants(this.props.selectedPosition.id);
   }
 
-  rejectApplicant(applicantId) {
-    this.props.rejectApplicant(applicantId);
+  selectApplicant(applicantId) {
+    const selectedApplicant = this.props.applicants.find(x => x.id === applicantId);
+    Actions.applicant({ selectedApplicant });
   }
 
   render() {
@@ -39,26 +38,11 @@ export class Display extends Component {
       const key = `appl-${String(applicant.id)}`;
       applicantRows.push(
         <View key={key} style={styles.positions.applicantRow}>
-          <Text style={styles.fonts.medium}>
-            {applicant.email}
-          </Text>
-          {this.props.busy
-            ? <View>
-              <Text
-                style={[styles.positions.applicantRejectBtn, styles.positions.rejectDisabled]}
-              >
-                  Reject
-                </Text>
-            </View>
-            : <TouchableOpacity
-              onPress={() => {
-                this.rejectApplicant(applicant.token);
-              }}
-            >
-              <Text style={[styles.positions.applicantRejectBtn, styles.positions.rejectEnabled]}>
-                  Reject
-                </Text>
-            </TouchableOpacity>}
+          <TouchableOpacity onPress={() => Actions.applicant({ selectedApplicant: applicant })}>
+            <Text style={styles.fonts.medium}>
+              {applicant.name} - {applicant.email}
+            </Text>
+          </TouchableOpacity>
         </View>,
       );
     });
@@ -72,14 +56,12 @@ export class Display extends Component {
 
 const stateToProps = state => ({
   applicants: state.positions.applicants,
-  busy: state.positions.busy,
 });
 
 const dispatchToProps = dispatch =>
   bindActionCreators(
     {
       getPositionApplicants,
-      rejectApplicant,
     },
     dispatch,
   );

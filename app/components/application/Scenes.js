@@ -5,6 +5,8 @@ import { Actions, Scene } from 'react-native-router-flux';
 import Signin from '../authentication/SignIn.react';
 import PositionList from '../positions/List.react';
 import PositionDisplay from '../positions/Display.react';
+import ApplicantDisplay from '../positionRequests/Display.react';
+import { rejectApplicant } from '../../actions/positionRequests/actions';
 
 import styles from '../../assets/styles/shared_styles';
 
@@ -37,6 +39,24 @@ const scenes = (
       key="position"
       component={PositionDisplay}
       getTitle={props => `${props.selectedPosition.title} Applicants`}
+    />
+    <Scene
+      key="applicant"
+      component={ApplicantDisplay}
+      getTitle={props => `Details for ${props.selectedApplicant.name}`}
+      renderRightButton={props =>
+        (<View>
+          <TouchableOpacity
+            onPress={() => {
+              rejectApplicant(props.selectedApplicant.token)(props.dispatch);
+              Actions.pop();
+            }}
+          >
+            <Text style={[styles.positions.applicantRejectBtn, styles.positions.rejectEnabled]}>
+              Reject
+            </Text>
+          </TouchableOpacity>
+        </View>)}
     />
   </Scene>
 );

@@ -8,14 +8,15 @@ export default StyleSheet.create({
   applicantRow: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    height: 40,
-    paddingRight: 20,
+    padding: 10,
+    backgroundColor: 'white',
+    marginBottom: 10,
   },
   applicantRejectBtn: {
     fontSize: 18,
     borderWidth: 1,
     padding: 5,
-    marginLeft: 10,
+    marginRight: 10,
   },
   rejectEnabled: {
     color: 'white',

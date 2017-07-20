@@ -1,11 +1,11 @@
 import { AsyncStorage } from 'react-native';
-import * as actions from '../positions/constants';
+import * as positionActions from '../positions/constants';
+import * as actions from './constants';
 import { positionRequestsUrl } from '../urls';
 
-/* eslint-disable import/prefer-default-export*/
 export function rejectApplicant(positionRequestId) {
   return async (dispatch) => {
-    dispatch({ type: actions.REJECT_APPLICANT_START });
+    dispatch({ type: positionActions.REJECT_APPLICANT_START });
     const token = (await AsyncStorage.getItem('auth_token')) || null;
     if (!token) throw new Error('No authentication token saved!');
     const headers = { 'Content-Type': 'application/json' };
@@ -23,10 +23,50 @@ export function rejectApplicant(positionRequestId) {
         /* eslint-disable no-unused-vars*/
         .then(resp =>
           /* eslint-enable no-unused-vars*/
-          dispatch({ type: actions.REJECT_APPLICANT_SUCCESS, payload: positionRequestId }),
+          dispatch({ type: positionActions.REJECT_APPLICANT_SUCCESS, payload: positionRequestId }),
         )
-        .catch(error => dispatch({ type: actions.REJECT_APPLICANT_ERROR, error }))
+        .catch(error => dispatch({ type: positionActions.REJECT_APPLICANT_ERROR, error }))
     );
   };
 }
-/* eslint-enable import/prefer-default-export*/
+
+export function getApplicantMessages(positionRequestId) {
+  return async (dispatch) => {
+    dispatch({ type: actions.GET_APPLICANT_MESSAGES_START });
+    const token = (await AsyncStorage.getItem('auth_token')) || null;
+    if (!token) throw new Error('No authentication token saved!');
+    const headers = { Accept: 'application/json' };
+    return fetch(
+      `${positionRequestsUrl}/${positionRequestId}/comments?authentication_token=${token}`,
+      {
+        method: 'GET',
+        headers,
+      },
+    )
+      .then(resp => resp.json())
+      .then(data => dispatch({ type: actions.GET_APPLICANT_MESSAGES_SUCCESS, payload: data }))
+      .catch(error => dispatch({ type: actions.GET_APPLICANT_MESSAGES_ERROR, error }));
+  };
+}
+
+export function sendApplicantMessage(positionRequestId, contents) {
+  return async (dispatch) => {
+    dispatch({ type: actions.CREATE_APPLICANT_MESSAGE_START });
+    const token = (await AsyncStorage.getItem('auth_token')) || null;
+    if (!token) throw new Error('No authentication token saved!');
+    const headers = { Accept: 'application/json', 'Content-Type': 'application/json' };
+    const body = JSON.stringify({
+      authentication_token: token,
+      id: positionRequestId,
+      comment: contents,
+    });
+    return fetch(`${positionRequestsUrl}/comment?authentication_token=${token}`, {
+      method: 'POST',
+      headers,
+      body,
+    })
+      .then(resp => resp.json())
+      .then(data => dispatch({ type: actions.CREATE_APPLICANT_MESSAGE_SUCCESS, payload: data }))
+      .catch(error => dispatch({ type: actions.CREATE_APPLICANT_MESSAGE_ERROR, error }));
+  };
+}

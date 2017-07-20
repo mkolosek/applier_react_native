@@ -81,4 +81,7 @@ export default StyleSheet.create({
   bottomXLarge: {
     marginBottom: 60,
   },
+  bottom2XLarge: {
+    marginBottom: 120,
+  },
 });

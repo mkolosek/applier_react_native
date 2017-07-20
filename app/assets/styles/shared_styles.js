@@ -11,6 +11,7 @@ import Icons from './shared/icons';
 import Borders from './shared/borders';
 import Menu from './shared/menu';
 import Auth from './shared/auth';
+import PositionRequests from './shared/positionRequests';
 
 module.exports = {
   colors: Colors,
@@ -20,6 +21,7 @@ module.exports = {
   remove: Remove,
   paddings: Paddings,
   positions: Positions,
+  positionRequests: PositionRequests,
   app_layout: AppLayout,
   avatar: Avatar,
   icons: Icons,
