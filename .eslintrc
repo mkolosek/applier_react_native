@@ -9,6 +9,7 @@
     "jest": true
   },
   "rules": {
+    "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
     "valid-jsdoc": ["error", {
       "requireReturn": true,
       "requireReturnType": true,
