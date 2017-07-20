@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
-const colors =  require('../../constants/colors')
+
+const colors = require('../../constants/colors');
 
 export default StyleSheet.create({
   menuElement: {
@@ -14,7 +15,7 @@ export default StyleSheet.create({
   },
   menuElementView: {
     flex: 1,
-    height:40,
+    height: 40,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -37,12 +38,12 @@ export default StyleSheet.create({
     width: 80,
   },
   menuElementTextDark: {
-    color: colors.gray
+    color: colors.gray,
   },
   menuTextInput: {
     flex: 2,
     fontSize: 14,
-    padding: 0
+    padding: 0,
   },
   signOutElement: {
     alignSelf: 'center',
@@ -59,24 +60,24 @@ export default StyleSheet.create({
   avatar: {
     marginTop: 30,
     marginBottom: -60,
-    overflow: 'hidden'    
+    overflow: 'hidden',
   },
   avatarBorder: {
     borderColor: colors.lightGray,
-    borderWidth: 1
+    borderWidth: 1,
   },
   uploadImageBtnHolder: {
-    top: -35
+    top: -35,
   },
   uploadImageBtn: {
     height: 40,
     width: 120,
     backgroundColor: colors.white,
-    opacity: 0.7
+    opacity: 0.7,
   },
   uploadImageIcon: {
     top: -50,
     height: 50,
-    width: 50
-  }
+    width: 50,
+  },
 });

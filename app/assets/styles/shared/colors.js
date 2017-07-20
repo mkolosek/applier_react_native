@@ -1,48 +1,49 @@
 import { StyleSheet } from 'react-native';
+
 const colors = require('../../constants/colors');
 
 export default StyleSheet.create({
   // text
 
   whiteText: {
-    color: colors.white
+    color: colors.white,
   },
   blueText: {
-    color: colors.blue
+    color: colors.blue,
   },
   greenText: {
-    color: colors.green
+    color: colors.green,
   },
   lightGrayText: {
-    color: colors.lightGray
+    color: colors.lightGray,
   },
   grayText: {
-    color: colors.gray
+    color: colors.gray,
   },
   darkerGrayText: {
-    color: colors.darkerGray
+    color: colors.darkerGray,
   },
   redText: {
-    color: colors.red
+    color: colors.red,
   },
   blackText: {
-    color: colors.black
+    color: colors.black,
   },
   placeholderText: {
-    color: colors.lightGray
+    color: colors.lightGray,
   },
   // background
   blueBackground: {
-    backgroundColor: colors.blue
+    backgroundColor: colors.blue,
   },
   whiteBackground: {
-    backgroundColor: colors.white
+    backgroundColor: colors.white,
   },
   lightGrayBackground: {
-    backgroundColor: colors.lightGray
+    backgroundColor: colors.lightGray,
   },
   blackWithOpacity: {
     backgroundColor: colors.black,
-    opacity: 0.9
-  }
+    opacity: 0.9,
+  },
 });

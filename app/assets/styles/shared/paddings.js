@@ -3,63 +3,63 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
   // all paddings
   extraSmall: {
-    padding: 5
+    padding: 5,
   },
   small: {
-    padding: 10
+    padding: 10,
   },
   medium: {
-    padding: 20
+    padding: 20,
   },
   // padding top
   topSmall: {
-    paddingTop: 10
+    paddingTop: 10,
   },
   topMedium: {
-    paddingTop: 20
+    paddingTop: 20,
   },
   topLarge: {
-    paddingTop: 30
+    paddingTop: 30,
   },
   topXLarge: {
-    paddingTop: 50
+    paddingTop: 50,
   },
 
   // padding vertical
   verticalXsmall: {
-    paddingVertical: 5
+    paddingVertical: 5,
   },
   verticalSmall: {
-    paddingVertical: 10
+    paddingVertical: 10,
   },
   verticalMedium: {
-    paddingVertical: 20
+    paddingVertical: 20,
   },
 
   // padding horizontal
   horizontalXsmall: {
-    paddingHorizontal: 5
+    paddingHorizontal: 5,
   },
   horizontalSmall: {
-    paddingHorizontal: 10
+    paddingHorizontal: 10,
   },
   horizontalMedium: {
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
   },
   horizontalLarge: {
-    paddingHorizontal: 40
+    paddingHorizontal: 40,
   },
 
   // padding bottom
   bottomSmall: {
-    paddingBottom: 10
+    paddingBottom: 10,
   },
   bottomMedium: {
-    paddingBottom: 20
+    paddingBottom: 20,
   },
 
-  //padding right
+  // padding right
   rightLarge: {
-    paddingRight: 40
-  }
+    paddingRight: 40,
+  },
 });

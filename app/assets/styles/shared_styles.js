@@ -25,5 +25,5 @@ module.exports = {
   icons: Icons,
   borders: Borders,
   menu: Menu,
-  auth: Auth
+  auth: Auth,
 };
