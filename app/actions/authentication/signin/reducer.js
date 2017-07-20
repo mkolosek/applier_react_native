@@ -1,10 +1,8 @@
-import React from 'react';
-import { Record, Seq } from 'immutable';
+import { Record } from 'immutable';
 import * as actions from './constants';
-import Error from '../../../utils/records/Error';
 
 const InitialState = Record({
-  error: null
+  error: null,
 });
 const initialState = new InitialState();
 
@@ -18,9 +16,9 @@ export default function signinReducer(state = initialState, action) {
       return state.delete('error');
     case actions.SIGNIN_ERROR:
       return state.set('error', action.error);
+    default:
+      return state;
   }
-
-  return state;
 }
 
 module.exports = signinReducer;
