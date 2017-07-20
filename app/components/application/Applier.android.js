@@ -1,14 +1,12 @@
-'use strict';
-
 import React, { Component } from 'react';
-import { Linking, View, AsyncStorage, Alert, BackAndroid, Text } from 'react-native';
-import { Actions, Scene, Router, Tabs } from 'react-native-router-flux';
-import scenes from './Scenes.js';
+import { View, AsyncStorage, BackAndroid } from 'react-native';
+import { Actions, Router } from 'react-native-router-flux';
 import { EventEmitter } from 'events';
-
-//actions
+// actions
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+
+import scenes from './Scenes';
 import { getPositions } from '../../actions/positions/actions';
 
 BackAndroid.addEventListener('hardwareBackPress', () => {
@@ -27,7 +25,7 @@ export class RootRouter extends Component {
     super(props);
     EventEmitter.prototype.setMaxListeners(0);
     AsyncStorage.getItem('auth_token')
-      .then(token => {
+      .then((token) => {
         if (token) {
           Actions.home();
         } else {
@@ -40,7 +38,7 @@ export class RootRouter extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <RouterWithRedux hideNavBar={true}>
+        <RouterWithRedux hideNavBar>
           {scenes}
         </RouterWithRedux>
       </View>
@@ -48,13 +46,12 @@ export class RootRouter extends Component {
   }
 }
 
-const dispatchToProps = dispatch => {
-  return bindActionCreators(
+const dispatchToProps = dispatch =>
+  bindActionCreators(
     {
-      getPositions
+      getPositions,
     },
-    dispatch
+    dispatch,
   );
-};
 
 export default connect(null, dispatchToProps)(RootRouter);

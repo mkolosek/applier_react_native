@@ -3,34 +3,34 @@ import * as colors from '../../../assets/constants/colors';
 
 const { width, height } = Dimensions.get('window');
 
-export default (signin = StyleSheet.create({
+export default StyleSheet.create({
   background: {
     backgroundColor: colors.lightGray,
-    flex: 1
+    flex: 1,
   },
   logo: {
-    margin: 80
+    margin: 80,
   },
   form: {
-    alignItems: 'center'
+    alignItems: 'center',
   },
   container: {
     backgroundColor: colors.lightGray,
     paddingBottom: Platform.OS === 'ios' ? 20 : 40,
     alignItems: 'center',
     justifyContent: 'space-between',
-    height: height
+    height,
   },
   innerContainer: {
-    width: width,
+    width,
     paddingBottom: Platform.OS === 'ios' ? 20 : 40,
     alignItems: 'center',
-    height: height,
-    justifyContent: 'space-between'
+    height,
+    justifyContent: 'space-between',
   },
   whiteText: {
     marginTop: 60,
-    color: colors.white
+    color: colors.white,
   },
   linkRight: {
     marginTop: 10,
@@ -38,7 +38,7 @@ export default (signin = StyleSheet.create({
     width: width - 50,
     color: colors.white,
     textAlign: 'right',
-    fontSize: 13
+    fontSize: 13,
   },
   signinBtn: {
     backgroundColor: colors.green,
@@ -47,19 +47,19 @@ export default (signin = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
     marginBottom: 120,
-    borderRadius: 3
+    borderRadius: 3,
   },
   disabledBtnText: {
-    color: colors.lightGrey
+    color: colors.lightGrey,
   },
   signinBtnText: {
     alignSelf: 'center',
     color: colors.white,
     fontWeight: 'bold',
-    fontSize: 22
+    fontSize: 22,
   },
   footer: {
     textAlign: 'center',
-    color: colors.white
-  }
-}));
+    color: colors.white,
+  },
+});

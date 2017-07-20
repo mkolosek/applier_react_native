@@ -1,9 +1,19 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, View, Text, TextInput, LayoutAnimation, ScrollView } from 'react-native';
-import detailInput from './styles/TextInput.css';
+import PropTypes from 'prop-types';
+import { TouchableOpacity, View, Text, TextInput, LayoutAnimation } from 'react-native';
 import { AutoGrowingTextInput } from 'react-native-autogrow-textinput';
+import detailInput from './styles/TextInput.css';
 
 class DetailInput extends Component {
+  static propTypes = {
+    name: PropTypes.string.isRequired,
+    value: PropTypes.string,
+    required: PropTypes.bool,
+    multiline: PropTypes.bool,
+    error: PropTypes.string,
+    edit: PropTypes.func,
+  };
+
   constructor() {
     super();
     this.focus = this.focus.bind(this);
@@ -17,7 +27,7 @@ class DetailInput extends Component {
 
   async focus() {
     await this.setState({ focused: true });
-    this.refs.inputField.focus();
+    this.inputField.focus();
   }
 
   blur() {
@@ -35,35 +45,39 @@ class DetailInput extends Component {
           <View style={[detailInput.textInputContainer]}>
             {this.props.multiline
               ? <AutoGrowingTextInput
-                  ref="inputField"
-                  onBlur={this.blur}
-                  style={[
-                    detailInput.textInput,
-                    this.props.error ? null : detailInput.fullInputWidth,
-                    { marginBottom: 0 }
-                  ]}
-                  maxHeight={80}
-                  underlineColorAndroid="transparent"
-                  onChangeText={value => {
-                    this.props.edit(value);
-                  }}
-                  {...this.props}
-                />
+                ref={(c) => {
+                  this.inputField = c;
+                }}
+                onBlur={this.blur}
+                style={[
+                  detailInput.textInput,
+                  this.props.error ? null : detailInput.fullInputWidth,
+                    { marginBottom: 0 },
+                ]}
+                maxHeight={80}
+                underlineColorAndroid="transparent"
+                onChangeText={(value) => {
+                  this.props.edit(value);
+                }}
+                {...this.props}
+              />
               : <TextInput
-                  onBlur={this.blur}
-                  ref="inputField"
-                  style={[detailInput.textInput]}
-                  underlineColorAndroid="transparent"
-                  onChangeText={value => {
-                    this.props.edit(value);
-                  }}
-                  {...this.props}
-                />}
+                onBlur={this.blur}
+                ref={(c) => {
+                  this.inputField = c;
+                }}
+                style={[detailInput.textInput]}
+                underlineColorAndroid="transparent"
+                onChangeText={(value) => {
+                  this.props.edit(value);
+                }}
+                {...this.props}
+              />}
 
             {this.props.error
               ? <Text style={detailInput.error}>
-                  {this.props.error}
-                </Text>
+                {this.props.error}
+              </Text>
               : null}
           </View>
         </View>
@@ -79,13 +93,21 @@ class DetailInput extends Component {
 
           {this.props.error
             ? <Text style={detailInput.error}>
-                {this.props.error}
-              </Text>
+              {this.props.error}
+            </Text>
             : null}
         </TouchableOpacity>
       </View>
     );
   }
 }
+
+DetailInput.defaultProps = {
+  value: '',
+  required: false,
+  multiline: false,
+  error: null,
+  edit: null,
+};
 
 export default DetailInput;

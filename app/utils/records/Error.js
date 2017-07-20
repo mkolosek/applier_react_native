@@ -4,7 +4,7 @@ const Error = Record({
   detail: '',
   status: '',
   title: '',
-  type: ''
+  type: '',
 });
 
 export default Error;
