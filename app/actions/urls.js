@@ -5,7 +5,7 @@ const database = {
 export const baseUrl = database.development; // database.staging; // database.production; //
 
 // signin
-export const signInUrl = `${baseUrl}users/sign_in`;
+export const signInUrl = `${baseUrl}api/v1/users/login`;
 
 export const positionsUrl = `${baseUrl}api/v1/positions`;
 export const positionRequestsUrl = `${baseUrl}api/v1/position_requests`;

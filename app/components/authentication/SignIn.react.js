@@ -27,7 +27,10 @@ const top = 0;
 export class SignIn extends Component {
   static propTypes = {
     signIn: PropTypes.func.isRequired,
-    error: PropTypes.objectOf(PropTypes.string),
+    error: PropTypes.shape({
+      error_message: PropTypes.string,
+      error: PropTypes.number,
+    }),
   };
 
   constructor(props) {
@@ -71,7 +74,7 @@ export class SignIn extends Component {
     const { email, password } = this.state;
     this.props.signIn(email, password).then(() => {
       if (this.props.error) {
-        Alert.alert('Invalid Credentials', this.props.error.message);
+        Alert.alert('Invalid Credentials', this.props.error.error_message);
         this.setState({ disabled: false });
       } else {
         this.setState({ disabled: false });

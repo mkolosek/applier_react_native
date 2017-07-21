@@ -3,8 +3,8 @@ import * as ACTIONS from './constants';
 import { signInUrl } from '../../urls';
 
 const handleAsyncStorage = async function handleAsyncStorage(data) {
-  if (data.errors) throw data.errors;
-  await AsyncStorage.setItem('auth_token', data.auth_token, () => data);
+  if (data.response_type === 'error') throw data.response;
+  await AsyncStorage.setItem('auth_token', data.authentication_token, () => data);
   return data;
 };
 
@@ -21,18 +21,11 @@ const signIn = (dispatch, email, password) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      user_login: {
-        email,
-        password,
-      },
+      email,
+      password,
     }),
   })
-    .then((resp) => {
-      if (resp.status === 401) {
-        throw new Error('Incorrect email or password');
-      }
-      return resp.json();
-    })
+    .then(resp => resp.json())
     .then(handleAsyncStorage)
     .then((data) => {
       dispatch(signinSuccessful(data));
