@@ -9,6 +9,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Dimensions,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -17,6 +18,7 @@ import { getApplicantMessages, sendApplicantMessage } from '../../actions/positi
 import styles from '../../assets/styles/shared_styles';
 
 const top = 0;
+const { height } = Dimensions.get('window');
 
 export class Display extends Component {
   static propTypes = {
@@ -67,7 +69,8 @@ export class Display extends Component {
 
   keyboardDidShow(e) {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-    this.setState({ top: -(e.endCoordinates.height - 50), marginTop: true });
+    const heightModifier = height * 0.5067567567567568;
+    this.setState({ top: -(e.endCoordinates.height - heightModifier), marginTop: true });
   }
 
   /* eslint-disable no-unused-vars*/
@@ -107,6 +110,9 @@ export class Display extends Component {
         </View>,
       );
     });
+    const heightModifier = this.state.marginTop
+      ? height * 0.6925675675675675
+      : height * 0.2533783783783784;
     return (
       <View
         style={{
@@ -114,10 +120,21 @@ export class Display extends Component {
           justifyContent: this.state.marginTop ? 'center' : 'space-between',
         }}
       >
-        <ScrollView style={[styles.positionRequests.messageList, styles.margins.topSmall]}>
-          {messageRows}
-        </ScrollView>
-        <View style={{ flexDirection: 'row', marginBottom: this.state.marginTop ? 20 : 0 }}>
+        <View style={{ height: height - heightModifier }}>
+          <ScrollView>
+            {messageRows}
+          </ScrollView>
+        </View>
+        <View
+          style={{
+            borderTopColor: 'darkgrey',
+            borderTopWidth: 1,
+            flexDirection: 'row',
+            backgroundColor: 'white',
+            marginBottom: this.state.marginTop ? 20 : 0,
+            height: 75,
+          }}
+        >
           <TextInput
             multiline
             style={styles.positionRequests.messageInput}

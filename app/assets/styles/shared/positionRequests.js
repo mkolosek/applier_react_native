@@ -9,9 +9,6 @@ export default StyleSheet.create({
     padding: 10,
     backgroundColor: 'white',
   },
-  messageList: {
-    height: height - 150,
-  },
   messageInput: {
     height: 50,
     width: width - 100,
@@ -19,10 +16,10 @@ export default StyleSheet.create({
   messageSendBtn: {
     borderWidth: 1,
     margin: 5,
-    paddingRight: 30,
-    paddingBottom: 15,
-    paddingLeft: 30,
-    paddingTop: 15,
+    paddingRight: width * 0.08333333333333333,
+    paddingBottom: height * 0.016891891891891893,
+    paddingLeft: width * 0.08333333333333333,
+    paddingTop: height * 0.016891891891891893,
   },
   messageSendBtnEnabled: {
     color: 'white',
@@ -33,5 +30,9 @@ export default StyleSheet.create({
     color: 'black',
     backgroundColor: 'grey',
     borderColor: 'black',
+  },
+  responseRow: {
+    padding: 5,
+    marginTop: 10,
   },
 });
