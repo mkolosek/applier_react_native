@@ -38,7 +38,7 @@ const StateApplicantRejectSuccess = {
   busy: false,
 };
 
-describe('signin reducer', () => {
+describe('positions reducer', () => {
   it('should return initial state if action undefined', () => {
     const state = positionsReducer(undefined, { type: 'RANDOM_ACTION' });
     expect(JSON.stringify(state)).toEqual(JSON.stringify(InitialStateHash));
