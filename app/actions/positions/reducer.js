@@ -39,6 +39,18 @@ export default function PositionReducer(state = initialState, action) {
       newState = newState.set('busy', false);
       return newState;
     }
+    case actions.IGNORE_APPLICANT_START: {
+      const newState = state.set('busy', true);
+      return newState;
+    }
+    case actions.IGNORE_APPLICANT_SUCCESS: {
+      let newState = state.set(
+        'applicants',
+        state.applicants.filter(a => a.token !== action.payload),
+      );
+      newState = newState.set('busy', false);
+      return newState;
+    }
     default: {
       return state;
     }

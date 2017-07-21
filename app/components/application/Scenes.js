@@ -6,16 +6,16 @@ import Signin from '../authentication/SignIn.react';
 import PositionList from '../positions/List.react';
 import PositionDisplay from '../positions/Display.react';
 import ApplicantDisplay from '../positionRequests/Display.react';
-import { rejectApplicant } from '../../actions/positionRequests/actions';
+import ApplicantAnswers from '../positionRequests/Answers.react';
+import ApplicantMenu from '../positionRequests/ApplicantMenu.react';
 
 import styles from '../../assets/styles/shared_styles';
 
-/* eslint-disable no-unused-vars*/
-const LoadingScreen = function LoadingScreen(props, context) {
-  /* eslint-enable no-unused-vars*/
+const LoadingScreen = function LoadingScreen() {
   return <View />;
 };
 
+/* eslint-disable no-useless-escape*/
 const scenes = (
   <Scene key="root">
     <Scene type="replace" key="loading" component={LoadingScreen} initial hideNavBar />
@@ -44,21 +44,15 @@ const scenes = (
       key="applicant"
       component={ApplicantDisplay}
       getTitle={props => `Details for ${props.selectedApplicant.name}`}
-      renderRightButton={props =>
-        (<View>
-          <TouchableOpacity
-            onPress={() => {
-              rejectApplicant(props.selectedApplicant.token)(props.dispatch);
-              Actions.pop();
-            }}
-          >
-            <Text style={[styles.positions.applicantRejectBtn, styles.positions.rejectEnabled]}>
-              Reject
-            </Text>
-          </TouchableOpacity>
-        </View>)}
+      renderRightButton={props => <ApplicantMenu selectedApplicant={props.selectedApplicant} />}
+    />
+    <Scene
+      key="answers"
+      component={ApplicantAnswers}
+      getTitle={props => `${props.selectedApplicant.name}\'s Answers`}
     />
   </Scene>
 );
+/* eslint-enable no-useless-escape*/
 
 module.exports = scenes;

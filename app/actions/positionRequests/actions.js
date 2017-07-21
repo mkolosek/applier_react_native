@@ -30,6 +30,32 @@ export function rejectApplicant(positionRequestId) {
   };
 }
 
+export function ignoreApplicant(positionRequestId) {
+  return async (dispatch) => {
+    dispatch({ type: positionActions.IGNORE_APPLICANT_START });
+    const token = (await AsyncStorage.getItem('auth_token')) || null;
+    if (!token) throw new Error('No authentication token saved!');
+    const headers = { 'Content-Type': 'application/json' };
+    const body = JSON.stringify({
+      authentication_token: token,
+      id: positionRequestId,
+    });
+    return (
+      fetch(`${positionRequestsUrl}/ignore`, {
+        method: 'PUT',
+        headers,
+        body,
+      })
+        /* eslint-disable no-unused-vars*/
+        .then(resp =>
+          /* eslint-enable no-unused-vars*/
+          dispatch({ type: positionActions.IGNORE_APPLICANT_SUCCESS, payload: positionRequestId }),
+        )
+        .catch(error => dispatch({ type: positionActions.IGNORE_APPLICANT_ERROR, error }))
+    );
+  };
+}
+
 export function getApplicantMessages(positionRequestId) {
   return async (dispatch) => {
     dispatch({ type: actions.GET_APPLICANT_MESSAGES_START });

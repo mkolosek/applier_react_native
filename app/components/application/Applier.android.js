@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, AsyncStorage, BackAndroid } from 'react-native';
 import { Actions, Router } from 'react-native-router-flux';
 import { EventEmitter } from 'events';
+import { MenuContext } from 'react-native-popup-menu';
 // actions
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -37,11 +38,13 @@ export class RootRouter extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1 }}>
-        <RouterWithRedux hideNavBar>
-          {scenes}
-        </RouterWithRedux>
-      </View>
+      <MenuContext>
+        <View style={{ flex: 1 }}>
+          <RouterWithRedux hideNavBar>
+            {scenes}
+          </RouterWithRedux>
+        </View>
+      </MenuContext>
     );
   }
 }

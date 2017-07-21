@@ -22,6 +22,7 @@
     "react-native-autogrow-textinput": "^4.0.0",
     "react-native-cancelable-fetch": "^0.1.1",
     "react-native-orientation": "^1.17.0",
+    "react-native-popup-menu": "^0.8.0",
     "react-native-router-flux": "4.0.0-beta.11",
     "react-redux": "^5.0.5",
     "redux": "^3.7.2",

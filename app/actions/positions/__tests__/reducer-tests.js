@@ -3,6 +3,8 @@ import {
   GET_POSITION_APPLICANTS_SUCCESS,
   REJECT_APPLICANT_START,
   REJECT_APPLICANT_SUCCESS,
+  IGNORE_APPLICANT_START,
+  IGNORE_APPLICANT_SUCCESS,
 } from '../constants';
 import positionsReducer from '../reducer';
 
@@ -33,6 +35,16 @@ const StateApplicantRejectStart = {
   busy: true,
 };
 const StateApplicantRejectSuccess = {
+  positions: [],
+  applicants: [],
+  busy: false,
+};
+const StateApplicantIgnoreStart = {
+  positions: [],
+  applicants: [],
+  busy: true,
+};
+const StateApplicantIgnoreSuccess = {
   positions: [],
   applicants: [],
   busy: false,
@@ -76,5 +88,26 @@ describe('positions reducer', () => {
     });
 
     expect(JSON.stringify(state)).toEqual(JSON.stringify(StateApplicantRejectSuccess));
+  });
+
+  it('should set busy on ignore applicant start', () => {
+    const state = positionsReducer(undefined, {
+      type: IGNORE_APPLICANT_START,
+    });
+    expect(JSON.stringify(state)).toEqual(JSON.stringify(StateApplicantIgnoreStart));
+  });
+
+  it('should reset busy and update applicants on ignore applicant success', () => {
+    positionsReducer(undefined, {
+      type: GET_POSITION_APPLICANTS_SUCCESS,
+      payload: applicants,
+    });
+
+    const state = positionsReducer(undefined, {
+      type: IGNORE_APPLICANT_SUCCESS,
+      payload: 'test-token-1',
+    });
+
+    expect(JSON.stringify(state)).toEqual(JSON.stringify(StateApplicantIgnoreSuccess));
   });
 });
