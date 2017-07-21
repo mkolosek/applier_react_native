@@ -16,17 +16,17 @@ const mockStore = configureMockStore([thunk]);
 describe('signin actions', () => {
   const email = 'test@email.com';
   const password = 'password';
-  const errors = [{ detail: 'test error', status: '400', title: 'bad request' }];
+  const response = { error_message: 'test error', error: 400 };
   const signInStart = { type: SIGNIN_START };
   const signInSuccess = {
     type: SIGNIN_SUCCESS,
-    response: { auth_token: 'test-authentication-token' },
+    response: { authentication_token: 'test-authentication-token' },
   };
-  const signInErrors = { type: SIGNIN_ERROR, error: errors };
+  const signInErrors = { type: SIGNIN_ERROR, error: response };
   const createSession = sinon.spy(AsyncStorage, 'setItem');
 
   it('displays error if user does not exists', () => {
-    fetchMock.mock(signInUrl, 'POST', { errors }).getMock();
+    fetchMock.mock(signInUrl, 'POST', { response_type: 'error', response }).getMock();
 
     const store = mockStore({ signin: {} });
 
@@ -42,7 +42,9 @@ describe('signin actions', () => {
   });
 
   it('creates session if user exists', () => {
-    fetchMock.mock(signInUrl, 'POST', { auth_token: 'test-authentication-token' }).getMock();
+    fetchMock
+      .mock(signInUrl, 'POST', { authentication_token: 'test-authentication-token' })
+      .getMock();
 
     const store = mockStore({ signin: {} });
 
