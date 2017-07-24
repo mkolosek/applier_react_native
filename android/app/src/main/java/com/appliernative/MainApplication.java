@@ -1,4 +1,4 @@
-package com.appliernative;
+package com.applier;
 
 import android.app.Application;
 

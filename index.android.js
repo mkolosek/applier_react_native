@@ -13,4 +13,4 @@ export default class ApplierNative extends Component {
   }
 }
 
-AppRegistry.registerComponent('ApplierNative', () => ApplierNative);
+AppRegistry.registerComponent('Applier', () => ApplierNative);

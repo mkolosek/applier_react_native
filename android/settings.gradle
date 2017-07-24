@@ -1,3 +1,3 @@
-rootProject.name = 'ApplierNative'
+rootProject.name = 'Applier'
 
 include ':app'
