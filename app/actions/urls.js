@@ -1,8 +1,8 @@
 const database = {
   development: 'http://192.168.1.51:3001/',
+  production: 'https://applierapp.com/',
 };
-// export const baseUrl = 'http://localhost:3000/v1/'; // database.development ; //
-export const baseUrl = database.development; // database.staging; // database.production; //
+export const baseUrl = database[process.env.NODE_ENV];
 
 // signin
 export const signInUrl = `${baseUrl}api/v1/users/login`;
